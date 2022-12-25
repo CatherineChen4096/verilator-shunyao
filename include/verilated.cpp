@@ -2569,9 +2569,9 @@ std::string VerilatedContextImp::argPlusMatch(const char* prefixp)
     const size_t len = std::strlen(prefixp);
     if (VL_UNLIKELY(!m_args.m_argVecLoaded)) {
         m_args.m_argVecLoaded = true;  // Complain only once
-//        VL_FATAL_MT("unknown", 0, "",
-//                    "%Error: Verilog called $test$plusargs or $value$plusargs without"
-//                    " testbench C first calling Verilated::commandArgs(argc,argv).");
+        //        VL_FATAL_MT("unknown", 0, "",
+        //                    "%Error: Verilog called $test$plusargs or $value$plusargs without"
+        //                    " testbench C first calling Verilated::commandArgs(argc,argv).");
     }
     for (const auto& i : m_args.m_argVec) {
         if (i[0] == '+') {

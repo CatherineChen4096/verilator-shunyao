@@ -371,16 +371,18 @@ inline void v3errorEndFatal(std::ostringstream& sstr) {
 #define UINFO(level, stmsg) \
     do { \
         if (VL_UNCOVERABLE(debug() >= (level))) { \
-            cout  <<  v3Global.printTimeStamp() << " - " << V3Error::lineStr(__FILE__, __LINE__) << stmsg; \
-	    if (v3Global.opt.logEnable()) {	\
-		v3Global.opt.logFile() <<  v3Global.printTimeStamp() << " - " << V3Error::lineStr(__FILE__, __LINE__) << stmsg; \
-	    }   \
+            cout << v3Global.printTimeStamp() << " - " << V3Error::lineStr(__FILE__, __LINE__) \
+                 << stmsg; \
+            if (v3Global.opt.logEnable()) { \
+                v3Global.opt.logFile() << v3Global.printTimeStamp() << " - " \
+                                       << V3Error::lineStr(__FILE__, __LINE__) << stmsg; \
+            } \
         } \
     } while (false)
 #define UINFOST(level, stmsg) \
     do { \
         if (VL_UNCOVERABLE(debug() >= (level))) { \
-            cout  <<  " - " << V3Error::lineStr(__FILE__, __LINE__) << stmsg; \
+            cout << " - " << V3Error::lineStr(__FILE__, __LINE__) << stmsg; \
         } \
     } while (false)
 #define UINFONL(level, stmsg) \

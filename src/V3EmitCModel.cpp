@@ -239,7 +239,7 @@ class EmitCModel final : public EmitCFunc {
         }
 
         puts("} VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);\n");
-	if (v3Global.hasMetadataSignals() || v3Global.opt.metadata()) {
+        if (v3Global.hasMetadataSignals() || v3Global.opt.metadata()) {
             puts("\n");
             puts("struct MetaInfo {\n");
             puts("    size_t width;\n");
@@ -519,8 +519,7 @@ class EmitCModel final : public EmitCFunc {
         }
     }
 
-    static size_t calcUnderhoodLayoutSize(const AstNodeDType* const typep, bool compound = false)
-    {
+    static size_t calcUnderhoodLayoutSize(const AstNodeDType* const typep, bool compound = false) {
         const AstNodeDType* const dtypep = typep->skipRefp();
         if (const auto* const adtypep = VN_CAST(dtypep, AssocArrayDType)) {
             return -1;  // TODO
@@ -545,18 +544,16 @@ class EmitCModel final : public EmitCFunc {
                 return -1;  // TODO
             } else if (bdtypep->keyword().isMTaskState()) {
                 return -1;  // TODO
-            } else if (dtypep->widthMin() <= VL_BYTESIZE) {  // Handle unpacked arrays; not bdtypep->width
+            } else if (dtypep->widthMin()
+                       <= VL_BYTESIZE) {  // Handle unpacked arrays; not bdtypep->width
                 return VL_BYTESIZE;
             } else if (dtypep->widthMin() <= VL_SHORTSIZE) {
                 return VL_SHORTSIZE;
-            }
-            else if (dtypep->widthMin() <= VL_IDATASIZE) {
+            } else if (dtypep->widthMin() <= VL_IDATASIZE) {
                 return VL_IDATASIZE;
-            }
-            else if (dtypep->isQuad()) {
+            } else if (dtypep->isQuad()) {
                 return VL_QUADSIZE;
-            }
-            else if (dtypep->isWide()) {
+            } else if (dtypep->isWide()) {
                 return VL_IDATASIZE * dtypep->widthWords();
             }
         }
@@ -569,15 +566,16 @@ class EmitCModel final : public EmitCFunc {
         // Emit variables in consecutive anon and non-anon batches
         for (const AstNode* nodep = modp->stmtsp(); nodep; nodep = nodep->nextp()) {
             if (const AstVar* const varp = VN_CAST(nodep, Var)) {
-                /*if (varp->isIO() || varp->isSignal() || varp->isClassMember() || varp->isTemp()) {
-                    varList.emplace_back(varp);
+                /*if (varp->isIO() || varp->isSignal() || varp->isClassMember() || varp->isTemp())
+                { varList.emplace_back(varp);
                 }*/
                 if (varp->isMetadata() || varp->nameProtect().find("Vforce") != string::npos) {
                     varList.emplace_back(varp);
                 }
             }
         }
-        puts("static std::string process_meta_string(const std::string &prefix, std::string input)\n");
+        puts("static std::string process_meta_string(const std::string &prefix, std::string "
+             "input)\n");
         puts("{\n");
         puts("    if (input[0] == '_') // special handling \n");
         puts("        return input;\n");
@@ -601,7 +599,7 @@ class EmitCModel final : public EmitCFunc {
         puts("    return output;\n");
         puts("}\n");
         puts("\n");
-        //puts("#define offsetof(st, m) ((size_t)&(((st *)0)->m))\n");
+        // puts("#define offsetof(st, m) ((size_t)&(((st *)0)->m))\n");
         puts("template <>\n");
         puts("MetaStore<" + topClassName() + ">::MetaStore(" + topClassName() + "* container)\n");
         puts(": container_(container),\n");
@@ -614,7 +612,8 @@ class EmitCModel final : public EmitCFunc {
             if (var_dtype_size < 0) { continue; }
             puts("{\n");
             puts("    MetaInfo info;\n");
-            puts("    info.offset = offsetof(" + prefixNameProtect(modp) + ", " + var->nameProtect() + ");\n");
+            puts("    info.offset = offsetof(" + prefixNameProtect(modp) + ", "
+                 + var->nameProtect() + ");\n");
             const AstBasicDType* const basicp = var->basicp();
             if (var->isIO() && basicp && !basicp->isOpaque()) {
                 puts("    info.width = " + std::to_string(var->width()) + ";\n");
@@ -623,7 +622,8 @@ class EmitCModel final : public EmitCFunc {
             } else {
                 puts("    info.width = " + std::to_string(var_dtype_size) + ";\n");
             }
-            puts("    info_map.emplace(process_meta_string(prefixName, \"" + var->name() + "\"), info);\n");
+            puts("    info_map.emplace(process_meta_string(prefixName, \"" + var->name()
+                 + "\"), info);\n");
             puts("}\n");
         }
         puts("}\n");
@@ -773,7 +773,7 @@ class EmitCModel final : public EmitCFunc {
         emitStandardMethods2(modp);
         if (v3Global.opt.trace()) { emitTraceMethods(modp); }
         if (v3Global.opt.savable()) { emitSerializationFunctions(); }
-	if (v3Global.hasMetadataSignals() || v3Global.opt.metadata()) { emitMeta(modp); }
+        if (v3Global.hasMetadataSignals() || v3Global.opt.metadata()) { emitMeta(modp); }
 
         VL_DO_CLEAR(delete m_ofp, m_ofp = nullptr);
     }

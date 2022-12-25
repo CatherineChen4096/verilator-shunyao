@@ -42,8 +42,9 @@ path = os.getcwd()
 os.chdir('../')
 data = os.popen("./bin/genMD5.sh").read()
 os.chdir(path)
-md5 = " md5 "+data.split(' ')[0][:8]
-print("static const char* const DTVERSION_rev = \"SHUNYAO-V1.5 " + rev + md5 + "\";")
+md5 = " md5 " + data.split(' ')[0][:8]
+print("static const char* const DTVERSION_rev = \"SHUNYAO-V1.5 " + rev + md5 +
+      "\";")
 
 # Warn after the print, so at least the header has good contents
 if re.search('UNKNOWN', rev):

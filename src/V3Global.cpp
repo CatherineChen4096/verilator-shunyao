@@ -26,6 +26,7 @@
 #include "V3Parse.h"
 #include "V3ParseSym.h"
 #include "V3Stats.h"
+
 #include <sys/time.h>
 
 //######################################################################
@@ -43,8 +44,9 @@ string V3Global::printTimeStamp() {
     struct timeval diff_time;
 
     gettimeofday(&current_time, NULL);
-    timersub( &current_time, &m_verilatorStartTime, &diff_time );
-    out << "[" << std::setw(5)<< diff_time.tv_sec<<"."<< std::setfill('0') << std::setw(6) <<diff_time.tv_usec<<"]";
+    timersub(&current_time, &m_verilatorStartTime, &diff_time);
+    out << "[" << std::setw(5) << diff_time.tv_sec << "." << std::setfill('0') << std::setw(6)
+        << diff_time.tv_usec << "]";
     return out.str();
 }
 

@@ -225,9 +225,7 @@ void V3Error::v3errorEnd(std::ostringstream& sstr, const string& extra) {
     ) {
         std::cerr << msg;
 #ifndef V3ERROR_NO_GLOBAL_
-        if (v3Global.opt.logEnable()) {
-            v3Global.opt.logFile() <<  msg;
-	}
+        if (v3Global.opt.logEnable()) { v3Global.opt.logFile() << msg; }
 #endif
     }
     if (!s_errorSuppressed
@@ -239,11 +237,12 @@ void V3Error::v3errorEnd(std::ostringstream& sstr, const string& extra) {
                       << " description see https://verilator.org/warn/" << s_errorCode.ascii()
                       << "?v=" << PACKAGE_VERSION_NUMBER_STRING << endl;
 #ifndef V3ERROR_NO_GLOBAL_
-        if (v3Global.opt.logEnable()) {
-            v3Global.opt.logFile() << warnMore() << "... For " << (anError ? "error" : "warning")
-                  << " description see https://verilator.org/warn/" << s_errorCode.ascii()
-                  << "?v=" << PACKAGE_VERSION_NUMBER_STRING << endl;
-        }
+            if (v3Global.opt.logEnable()) {
+                v3Global.opt.logFile()
+                    << warnMore() << "... For " << (anError ? "error" : "warning")
+                    << " description see https://verilator.org/warn/" << s_errorCode.ascii()
+                    << "?v=" << PACKAGE_VERSION_NUMBER_STRING << endl;
+            }
 #endif
         }
         if (!s_describedEachWarn[s_errorCode] && !s_pretendError[s_errorCode]) {
@@ -255,9 +254,9 @@ void V3Error::v3errorEnd(std::ostringstream& sstr, const string& extra) {
                           << " */\" and lint_on around source to disable this message." << endl;
 #ifndef V3ERROR_NO_GLOBAL_
                 if (v3Global.opt.logEnable()) {
-                    v3Global.opt.logFile() << warnMore() << "... Use \"/* verilator lint_off "
-                          << s_errorCode.ascii()
-                          << " */\" and lint_on around source to disable this message." << endl;
+                    v3Global.opt.logFile()
+                        << warnMore() << "... Use \"/* verilator lint_off " << s_errorCode.ascii()
+                        << " */\" and lint_on around source to disable this message." << endl;
                 }
 #endif
             }
@@ -268,10 +267,10 @@ void V3Error::v3errorEnd(std::ostringstream& sstr, const string& extra) {
                           << endl;
 #ifndef V3ERROR_NO_GLOBAL_
                 if (v3Global.opt.logEnable()) {
-                    v3Global.opt.logFile()  << warnMore() << "*** See https://verilator.org/warn/"
-                          << s_errorCode.ascii() << " before disabling this,\n";
-                    v3Global.opt.logFile()  << warnMore() << "else you may end up with different sim results."
-                          << endl;
+                    v3Global.opt.logFile() << warnMore() << "*** See https://verilator.org/warn/"
+                                           << s_errorCode.ascii() << " before disabling this,\n";
+                    v3Global.opt.logFile()
+                        << warnMore() << "else you may end up with different sim results." << endl;
                 }
 #endif
             }

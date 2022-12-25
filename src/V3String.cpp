@@ -557,7 +557,7 @@ string VSpellCheck::bestCandidateInfo(const string& goal, EditDistance& distance
 
         const EditDistance dist = editDistance(goal, candidate);
         UINFOST(9, "EditDistance dist=" << dist << " cutoff=" << cutoff << " goal=" << goal
-                                      << " candidate=" << candidate << endl);
+                                        << " candidate=" << candidate << endl);
         if (dist < distancer && dist <= cutoff) {
             distancer = dist;
             bestCandidate = candidate;

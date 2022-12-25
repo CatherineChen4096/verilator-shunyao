@@ -50,7 +50,7 @@ void VlcTop::readCoverage(const string& filename, bool nonfatal) {
             }
             const string point = line.substr(3, secspace - 3);
             uint64_t hits = std::atoll(line.c_str() + secspace + 1);
-            //UINFOST(9,"   point '"<<point<<"'"<<" "<<hits<<endl);
+            // UINFOST(9,"   point '"<<point<<"'"<<" "<<hits<<endl);
 
             uint64_t pointnum = points().findAddPoint(point, hits);
             if (pointnum) {}  // Prevent unused
@@ -210,8 +210,9 @@ void VlcTop::annotateCalc() {
             unsigned thresh
                 = (!threshStr.empty()) ? std::atoi(threshStr.c_str()) : opt.annotateMin();
             const bool ok = (point.count() >= thresh);
-            UINFOST(9, "AnnoCalc count " << filename << ":" << lineno << ":" << point.column() << " "
-                                       << point.count() << " " << point.linescov() << '\n');
+            UINFOST(9, "AnnoCalc count " << filename << ":" << lineno << ":" << point.column()
+                                         << " " << point.count() << " " << point.linescov()
+                                         << '\n');
             // Base coverage
             source.incCount(lineno, point.column(), point.count(), ok);
             // Additional lines covered by this statement

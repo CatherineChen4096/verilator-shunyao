@@ -139,7 +139,7 @@ def profcfunc(filename):
             vfuncs[vfunc]['sec'] += funcs[func]['sec']
 
     total_sec = {}
-    total_sec['type'] =   0.0
+    total_sec['type'] = 0.0
     total_sec['design'] = 0.0
     total_sec['module'] = 0.0
     for ftype in ['type', 'design', 'module']:
@@ -156,7 +156,8 @@ def profcfunc(filename):
         for what in sorted(groups[ftype].keys()):
             # \377 used to establish sort order
             pwhat = re.sub(r'^\377', '', what)
-            print("  %6.2f  %s" % (groups_sec[ftype][what]*100/total_sec[ftype], pwhat))
+            print("  %6.2f  %s" %
+                  (groups_sec[ftype][what] * 100 / total_sec[ftype], pwhat))
         print()
 
     design_width = 1

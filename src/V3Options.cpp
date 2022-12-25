@@ -404,8 +404,7 @@ string V3Options::allArgsString() const VL_MT_SAFE {
     return out;
 }
 
-inline bool ends_with(std::string const & value, std::string const & ending)
-{
+inline bool ends_with(std::string const& value, std::string const& ending) {
     if (ending.size() > value.size()) return false;
     return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
 }
@@ -420,8 +419,8 @@ string V3Options::allArgsStringForHierBlock(bool forTop) const {
     std::string hppfile_subname(".hpp");
     for (std::list<string>::const_iterator it = m_impp->m_allArgs.begin();
          it != m_impp->m_allArgs.end(); ++it) {
-        if (ends_with((*it), vfile_subname) || ends_with((*it), svfile_subname) ||
-            ends_with((*it), hfile_subname) || ends_with((*it), hppfile_subname)  ) {
+        if (ends_with((*it), vfile_subname) || ends_with((*it), svfile_subname)
+            || ends_with((*it), hfile_subname) || ends_with((*it), hppfile_subname)) {
             continue;
         }
         int skip = 0;
@@ -1602,17 +1601,16 @@ void V3Options::parseOptsList(FileLine* fl, const string& optdir, int argc, char
         m_xmlOutput = valp;
         m_xmlOnly = true;
     });
-    DECL_OPTION("-log", CbVal, [this,fl](const char* valp) {
+    DECL_OPTION("-log", CbVal, [this, fl](const char* valp) {
         m_logFilename = valp;
-        m_logFile.open(m_logFilename, std::ofstream::out );
+        m_logFile.open(m_logFilename, std::ofstream::out);
         if (m_logFile.is_open()) {
             m_logEnable = true;
             cout << "Starting " << version() << endl;
-            cout << "$VERILATOR_ROOT="<< getenvVERILATOR_ROOT() <<endl;
-            v3Global.opt.logFile() <<"Starting " << version() << endl;
-            v3Global.opt.logFile() << "$VERILATOR_ROOT="<< getenvVERILATOR_ROOT() <<endl;
-        }
-        else {
+            cout << "$VERILATOR_ROOT=" << getenvVERILATOR_ROOT() << endl;
+            v3Global.opt.logFile() << "Starting " << version() << endl;
+            v3Global.opt.logFile() << "$VERILATOR_ROOT=" << getenvVERILATOR_ROOT() << endl;
+        } else {
             fl->v3error("Can't open log file ! " << valp);
         }
     });
